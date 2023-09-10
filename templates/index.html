@@ -1,0 +1,71 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Password Generator</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Password Generator</h1>
+
+        
+        <form method="get">
+            <div class="options">
+                <label for="length"><b>Password Length:</b></label>
+                <input type="number" name="length" id="length" value='{{length}}' min=8 max=70><br><br> 
+                <label><b>Letter:</b></label>
+                <input name='letters' type="checkbox" id="letters" value='checked' {{letters}} ><br><br>
+                <label><b>Symbols:</b></label>
+                <input name='symbols' type="checkbox" value='checked' {{symbols}} id="symbols"><br><br>
+                <label><b>Number:</b></label>   
+                <input name='numbers' type="checkbox" id="number" value='checked' {{number}}><br><br>
+                <div class="password">
+                    <p id="textToCopy"><b>{{password}}</b></p>
+                </div>
+                <button id="generate">Create Generate Password</button>
+                <button type='button' onclick="copyText()">Copy</button>
+            </div>
+        </form>
+        
+        
+        <script>
+        function copyText() {
+        const textToCopyElement = document.getElementById("textToCopy");
+        const textToCopy = textToCopyElement.innerText;
+
+        // Create a temporary textarea element
+        const textarea = document.createElement("textarea");
+        textarea.value = textToCopy;
+
+        // Make the textarea hidden
+        textarea.style.position = "fixed";
+        textarea.style.top = "0";
+        textarea.style.left = "0";
+        textarea.style.opacity = "0";
+
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+
+        try {
+            // Execute the copy command
+            const successful = document.execCommand("copy");
+            const message = successful ? "Text copied to clipboard" : "Failed to copy text";
+            console.log(message);
+        } catch (error) {
+            console.error("Error copying text:", error);
+        }
+
+        document.body.removeChild(textarea);
+        alert("Copied!");
+
+        }
+        </script>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+    </body>
+</html>
